@@ -4,6 +4,8 @@ import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import { config as loadEnv } from "dotenv";
 
+
+
 for (const envFile of [".env.local", ".env"]) {
   const fullPath = resolve(process.cwd(), envFile);
   if (existsSync(fullPath)) {
