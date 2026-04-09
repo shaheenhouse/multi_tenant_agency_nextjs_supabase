@@ -10,9 +10,15 @@ for (const envFile of [".env.local", ".env"]) {
   }
 }
 
-const migrationUrl = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
+let migrationUrl = process.env.DIRECT_URL ?? process.env.DATABASE_URL;
 if (!migrationUrl) {
-  throw new Error("Missing DIRECT_URL or DATABASE_URL in .env.local/.env");
+  // `prisma generate` does not connect; a dummy URL satisfies config on CI when env
+  // is not yet available (e.g. some install phases). Prefer setting DATABASE_URL on Vercel.
+  if (process.env.VERCEL === "1" || process.env.CI) {
+    migrationUrl = "postgresql://postgres:postgres@127.0.0.1:5432/postgres";
+  } else {
+    throw new Error("Missing DIRECT_URL or DATABASE_URL in .env.local/.env");
+  }
 }
 
 export default defineConfig({
