@@ -1,0 +1,16 @@
+model Booking {
+  id          String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  agencyId    String        @map("agency_id") @db.Uuid
+  bookingRef  String        @unique @map("booking_ref")
+  clientName  String        @map("client_name")
+  destination String
+  travelDate  DateTime      @map("travel_date") @db.Date
+  amountAud   Decimal       @map("amount_aud") @db.Decimal(12, 2)
+  status      BookingStatus
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  agency Agency @relation(fields: [agencyId], references: [id], onDelete: Cascade)
+
+  @@index([agencyId, travelDate], map: "idx_bookings_agency_id_travel_date")
+  @@map("bookings")
+}
