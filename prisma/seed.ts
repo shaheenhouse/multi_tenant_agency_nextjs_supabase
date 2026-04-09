@@ -1,4 +1,4 @@
-import { BookingStatus, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
@@ -34,42 +34,42 @@ const starterRows: Array<{
   destination: string;
   travelDate: string;
   amountAud: number;
-  status: BookingStatus;
+  status: "Confirmed" | "Pending" | "Cancelled";
 }> = [
   {
     clientName: "Olivia Chen",
     destination: "Tokyo",
     travelDate: "2026-05-18",
     amountAud: 3280,
-    status: BookingStatus.Confirmed,
+    status: "Confirmed",
   },
   {
     clientName: "Liam Wilson",
     destination: "Auckland",
     travelDate: "2026-06-02",
     amountAud: 1490,
-    status: BookingStatus.Pending,
+    status: "Pending",
   },
   {
     clientName: "Aisha Patel",
     destination: "Singapore",
     travelDate: "2026-07-11",
     amountAud: 2210,
-    status: BookingStatus.Confirmed,
+    status: "Confirmed",
   },
   {
     clientName: "Noah Jackson",
     destination: "Bali",
     travelDate: "2026-08-21",
     amountAud: 1895,
-    status: BookingStatus.Cancelled,
+    status: "Cancelled",
   },
   {
     clientName: "Mia Thompson",
     destination: "Queenstown",
     travelDate: "2026-09-08",
     amountAud: 2640,
-    status: BookingStatus.Pending,
+    status: "Pending",
   },
 ];
 
